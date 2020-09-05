@@ -1,13 +1,6 @@
-struct Rule
-{
-    int output[] = {0, 1, 0};
-}
+#define SIZE 4
 
-struct Cell
-{
-    int input;
-    int output;
-    int status;
-    int status_group;
-    struct Rule r1;
-}
+void print_cell(int *cell, int size);
+void calc_cell(int *cell, int size);
+int calc_cell_status(int *cell, int size, int local);
+void copy_cell_value(int *cell, int *cell_arr, int size);
