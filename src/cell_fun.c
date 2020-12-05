@@ -1,45 +1,81 @@
 #include <stdio.h>
 #include "cell.h"
 
-void print_cell(int *cell, int size)
+void calc_rule_group(struct Cell cell, int rule, int rule_size) // 简易规则2规则组转换装置
 {
-    for(int i = 0; i < size; i++)
+    int rule_swap = rule;
+    for(int i = (rule_size - 1); i > 0; i--)
     {
-        printf("%d", cell[i]);
+        if((rule_swap - calc_power(2, i)) >= 0)
+        {
+            cell.rule_group[i] = 1;
+            rule_swap = rule_swap - calc_power(2, i);
+        }
+        else
+            cell.rule_group[i] = 0;
     }
 }
 
-void calc_cell(int *cell, int size)
+void calc_cell(struct Cell *cell_group, int size)
 {
-    int rule[8] = {1, 0, 1, 0, 1, 0, 1, 0}, num;
-    int cell_arr[size];
-    copy_cell_value(cell, cell_arr, size);
-    for(int i = 0; i < size; i++)
-    {
-        num = calc_cell_status(cell_arr, size, i);
-        cell[i] = rule[num];
-    }
+    struct Cell cell_group_arr[size];
+    int num;
+    copy_cell_value(cell_group, cell_group_arr, size); // 缓存细胞组
+    for(int i = 0; i < size; i++) // 为每个cell计算状态
+        cell_group[i].status = calc_cell_status(cell_group_arr, i);
 }
 
-int calc_cell_status(int *cell, int size, int local)
+int calc_cell_status(struct Cell *cell_group, int local)
 {
-    int left, mid, right, num;
-    mid = local;
-    right = local + 1;
-    left = local - 1;
-    if(right >= size)
-        right = 0;
-    if(left < 0)
-        left = size - 1;
-
-    num = (cell[left] * 4) + (cell[mid] * 2) + cell[right];
-    return num;
+    int num = 0, i, status;
+    for(i = 0; i < cell_group[local].input_size; i++) // 计算状态号
+        num = (cell_group[cell_group[local].input_group[i]].status * calc_power(2, i)) + num;
+    status = cell_group[local].rule_group[num];
+    return status;
 }
 
-void copy_cell_value(int *cell, int *cell_arr, int size)
+int calc_power(int base, int times)
+{
+    if(times != 0)
+    {
+        int output;
+        output = base;
+        for(int i = 1; i < times; i++)
+            output = output * base;
+        return output;
+    }
+    return 1;
+}
+
+void copy_cell_value(struct Cell *cell_group, struct Cell *cell_group_arr, int size)
 {
     for(int i = 0; i < size; i++)
-    {
-        cell_arr[i] = cell[i];
-    }
+        cell_group_arr[i] = cell_group[i];
+}
+
+void print_cell(struct Cell cell)
+{
+    printf("status: %d\nrule_size: %d\ninput_size: %d\n", cell.status, cell.rule_size, cell.input_size);
+    printf("rule_group:{\n");
+    for(int i = 0; i < cell.rule_size; i++)
+        printf("    rule_group%d: %d\n", i, cell.rule_group[i]);
+    printf("}\n");
+    printf("input_group:{\n");
+    for(int i = 0; i < cell.input_size; i++)
+        printf("    input_group%d: %d\n", i, cell.input_group[i]);
+    printf("}\n");
+    printf("\n");
+}
+
+void print_cell_all(struct Cell *cell_group, int size)
+{
+    for(int i = 0; i < size; i++)
+        print_cell(cell_group[i]);
+}
+
+void print_cell_status(struct Cell *cell_group, int size)
+{
+    for(int i = 0; i < size; i++)
+        printf("%d", cell_group[i].status);
+    printf("\n");
 }
