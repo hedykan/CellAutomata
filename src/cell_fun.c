@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include "cell.h"
 
-void calc_rule_group(struct Cell cell, int rule, int rule_size) // 简易规则2规则组转换装置
+void calc_rule_group(struct Cell *cell, int rule, int rule_size) // 简易规则2规则组转换装置
 {
     int rule_swap = rule;
-    for(int i = (rule_size - 1); i > 0; i--)
+    for(int i = (rule_size - 1); i >= 0; i--)
     {
         if((rule_swap - calc_power(2, i)) >= 0)
         {
-            cell.rule_group[i] = 1;
+            cell->rule_group[i] = 1;
             rule_swap = rule_swap - calc_power(2, i);
         }
         else
-            cell.rule_group[i] = 0;
+            cell->rule_group[i] = 0;
     }
 }
 
