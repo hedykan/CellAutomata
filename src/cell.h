@@ -4,6 +4,7 @@
 
 struct Cell
 {
+    int id;
     int status; // cell当前状态
     int status_size; // cell拥有的状态数
     int status_group[2]; // cell拥有的具体状态组，为状态序列

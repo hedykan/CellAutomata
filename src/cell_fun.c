@@ -55,6 +55,7 @@ void copy_cell_value(struct Cell *cell_group, struct Cell *cell_group_arr, int s
 
 void print_cell(struct Cell cell)
 {
+    printf("cell_id: %d\n", cell.id);
     printf("status: %d\nrule_size: %d\ninput_size: %d\n", cell.status, cell.rule_size, cell.input_size);
     printf("rule_group:{\n");
     for(int i = 0; i < cell.rule_size; i++)
