@@ -1,6 +1,17 @@
 #include <stdio.h>
 #include "cell.h"
 
+void cell_init(struct Cell *cell, int cell_id, int status, int rule_size, int rule, int input_size, int *input_group)
+{
+    cell->id = cell_id;
+    cell->status = status;
+    cell->rule_size = rule_size;
+    cell->input_size = input_size;
+    calc_rule_group(cell, rule, cell->rule_size);
+    for(int i = 0; i < cell->input_size; i++)
+        cell->input_group[i] = input_group[i];
+}
+
 void calc_rule_group(struct Cell *cell, int rule, int rule_size) // 简易规则2规则组转换装置
 {
     int rule_swap = rule;

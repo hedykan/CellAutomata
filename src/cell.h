@@ -15,6 +15,7 @@ struct Cell
     int input_transfer; // 输入状态转换器，有些输入来源状态需要转换
 };
 
+void cell_init(struct Cell *cell, int cell_id, int status, int rule_size, int rule, int input_size, int *input_group);
 void calc_rule_group(struct Cell *cell, int rule, int rule_size); // 简易规则2规则组转换装置
 void calc_cell(struct Cell *cell_group, int size);
 int calc_cell_status(struct Cell *cell_group, int local);
