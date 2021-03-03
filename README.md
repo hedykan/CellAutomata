@@ -21,6 +21,8 @@
 ## 规则组rule_group
 规则组rule_group是当前Cell进行状态status转换的根据
 
+规则组rule_group可以是映射也可以是函数
+
 规则组rule_group的规则条数取决于输入组input_group中所有的[Cell的[状态status经过输入状态转换规则得到的总状态数]]的乘积
 
 当然，也不一定

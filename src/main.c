@@ -1,39 +1,46 @@
 #include "cell.h"
 void cell_init_test(struct Cell *cell_group);
+void cell_init_test1(struct Cell *cell_group, int size);
 
 int main()
 {
     struct Cell cell_group[SIZE];
-    cell_init_test(cell_group);
+    cell_init_test1(cell_group, SIZE);
     print_cell_all(cell_group, SIZE);
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 100; i++)
     {
         calc_cell(cell_group, SIZE);
         printf("calc: \n");
         print_cell_status(cell_group, SIZE);
+        /* print_cell_all(cell_group, SIZE); */
     }
+    cell_free(cell_group, SIZE);
 
     return 0;
 }
 
-void cell_init_test(struct Cell *cell_group)
+void cell_init_test1(struct Cell *cell_group, int size)
 {
-    for(int i = 0; i < SIZE; i++)
+    for(int i = 0; i < size; i++)
     {
-        int num = -1, input_size = 3;
-        int input_group[input_size];
+        int num = -1, input_size = 1;
+        int *input_group = (int *)malloc(input_size * sizeof(int));
         for(int j = 0; j < input_size; j++)
         {
             if((i + num) < 0)
-                input_group[j] = SIZE - 1;
-            else if((i + num) > (SIZE - 1))
+                input_group[j] = size - 1;
+            else if((i + num) > (size - 1))
                 input_group[j] = 0;
             else
                 input_group[j] = i + num;
             num++;
         }
-        for(int j = 0; j < input_size; j++)
-            printf("%d", input_group[i]);
-        cell_init(&cell_group[i], i, (rand() % 2), 8, 110, input_size, input_group);
+        int status = 0, status_size = 2;
+        int *status_group = (int *)malloc(2 * sizeof(int));
+        status_group[0] = 0;
+        status_group[1] = 1;
+        int rule_size = 2;
+        int rule = 1;
+        cell_init(&cell_group[i], i, status, status_size, status_group, rule_size, rule, input_size, input_group);
     }
 }
