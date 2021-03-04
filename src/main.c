@@ -1,5 +1,5 @@
 #include "cell.h"
-void cell_init_test(struct Cell *cell_group);
+void cell_scanf(struct Cell *cell_group, int local);
 void cell_init_test1(struct Cell *cell_group, int size);
 
 int main()
@@ -7,16 +7,29 @@ int main()
     struct Cell cell_group[SIZE];
     cell_init_test1(cell_group, SIZE);
     print_cell_all(cell_group, SIZE);
-    for(int i = 0; i < 100; i++)
-    {
-        calc_cell(cell_group, SIZE);
-        printf("calc: \n");
-        print_cell_status(cell_group, SIZE);
-        /* print_cell_all(cell_group, SIZE); */
-    }
+    /* for(int i = 0; i < 100; i++) */
+    /* { */
+    /*     calc_cell(cell_group, SIZE); */
+    /*     printf("calc: \n"); */
+    /*     print_cell_status(cell_group, SIZE); */
+    /*     /\* print_cell_all(cell_group, SIZE); *\/ */
+    /* } */
+    cell_scanf(cell_group, 1);
     cell_free(cell_group, SIZE);
 
     return 0;
+}
+
+void cell_scanf(struct Cell *cell_group, int local)
+{
+    char input[32];
+    int i = 0;
+    scanf("%d", input);
+    while(input[i] != '\0')
+    {
+        printf("%d", input[i]);
+        i++;
+    }
 }
 
 void cell_init_test1(struct Cell *cell_group, int size)
