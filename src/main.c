@@ -6,10 +6,9 @@ int main()
 {
     struct Cell cell_group[SIZE];
     cell_init_test1(cell_group, SIZE);
-    int end;
+    print_cell_all(cell_group, SIZE);
     while(1)
     {
-        print_cell_all(cell_group, SIZE);
         for(int i = 0; i < 10; i++)
         {
             printf("calc: \n");
@@ -26,11 +25,17 @@ int main()
 
 void cell_scanf(struct Cell *cell_group)
 {
-    int input, local;
+    int local, status, rule;
+    char c;
     int i = 0;
     printf("user> ");
-    scanf("%d,%d", &local, &input);
-    cell_status_change(cell_group + local, input);
+    scanf("%c,%d,%d,%d", &c, &local, &status, &rule);
+    if(c == 'a')
+    {
+        cell_status_change(cell_group + local, status);
+        cell_rule_change(cell_group + local, rule);
+        print_cell(cell_group[local]);
+    }
 }
 
 void cell_init_test1(struct Cell *cell_group, int size)

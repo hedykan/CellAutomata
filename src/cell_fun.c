@@ -33,6 +33,11 @@ void cell_status_change(struct Cell *cell, int status)
     cell->status = status;
 }
 
+void cell_rule_change(struct Cell *cell, int rule)
+{
+    calc_rule_group(cell, rule, cell->rule_size);
+}
+
 void cell_free(struct Cell *cell, int size)
 {
     for(int i = 0; i < size; i++)
@@ -63,10 +68,13 @@ void calc_rule_group(struct Cell *cell, int rule, int rule_size) // 简易规则
 void calc_cell(struct Cell *cell_group, int size)
 {
     struct Cell cell_group_arr[size];
-    int num;
+    int num, status;
     copy_cell_value(cell_group, cell_group_arr, size); // 缓存细胞组
     for(int i = 0; i < size; i++) // 为每个cell计算状态
-        cell_group[i].status = calc_cell_status(cell_group_arr, i);
+    {
+        status = calc_cell_status(cell_group_arr, i);
+        cell_status_change(cell_group + i, status);
+    }
 }
 
 int calc_cell_status(struct Cell *cell_group, int local)
