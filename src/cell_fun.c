@@ -28,6 +28,11 @@ void cell_input_set(struct Cell *cell, int input_size, int *input_group)
     cell->input_group = input_group;
 }
 
+void cell_status_change(struct Cell *cell, int status)
+{
+    cell->status = status;
+}
+
 void cell_free(struct Cell *cell, int size)
 {
     for(int i = 0; i < size; i++)

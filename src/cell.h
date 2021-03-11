@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 1
+#define SIZE 10
 
 struct Cell
 {
@@ -20,6 +20,7 @@ void cell_init(struct Cell *cell, int cell_id, int status, int status_size, int 
 void cell_rule_set(struct Cell *cell, int rule_size, int rule);
 void cell_status_set(struct Cell *cell, int status, int status_size, int *status_group);
 void cell_input_set(struct Cell *cell, int input_size, int *input_group);
+void cell_status_change(struct Cell *cell, int status);
 void cell_free(struct Cell *cell, int size);
 
 void calc_rule_group(struct Cell *cell, int rule, int rule_size); // 简易规则2规则组转换装置

@@ -1,42 +1,43 @@
 #include "cell.h"
-void cell_scanf(struct Cell *cell_group, int local);
+void cell_scanf(struct Cell *cell_group);
 void cell_init_test1(struct Cell *cell_group, int size);
 
 int main()
 {
     struct Cell cell_group[SIZE];
     cell_init_test1(cell_group, SIZE);
-    print_cell_all(cell_group, SIZE);
-    /* for(int i = 0; i < 100; i++) */
-    /* { */
-    /*     calc_cell(cell_group, SIZE); */
-    /*     printf("calc: \n"); */
-    /*     print_cell_status(cell_group, SIZE); */
-    /*     /\* print_cell_all(cell_group, SIZE); *\/ */
-    /* } */
-    cell_scanf(cell_group, 1);
+    int end;
+    while(1)
+    {
+        print_cell_all(cell_group, SIZE);
+        for(int i = 0; i < 1; i++)
+        {
+            printf("calc: \n");
+            print_cell_status(cell_group, SIZE);
+            calc_cell(cell_group, SIZE);
+            print_cell_status(cell_group, SIZE);
+        }
+        cell_scanf(cell_group);
+    }
     cell_free(cell_group, SIZE);
 
     return 0;
 }
 
-void cell_scanf(struct Cell *cell_group, int local)
+void cell_scanf(struct Cell *cell_group)
 {
-    char input[32];
+    int input, local;
     int i = 0;
-    scanf("%d", input);
-    while(input[i] != '\0')
-    {
-        printf("%d", input[i]);
-        i++;
-    }
+    printf("user> ");
+    scanf("%d,%d", &local, &input);
+    cell_status_change(cell_group + local, input);
 }
 
 void cell_init_test1(struct Cell *cell_group, int size)
 {
     for(int i = 0; i < size; i++)
     {
-        int num = -1, input_size = 1;
+        int num = -1, input_size = 3;
         int *input_group = (int *)malloc(input_size * sizeof(int));
         for(int j = 0; j < input_size; j++)
         {
@@ -52,8 +53,8 @@ void cell_init_test1(struct Cell *cell_group, int size)
         int *status_group = (int *)malloc(2 * sizeof(int));
         status_group[0] = 0;
         status_group[1] = 1;
-        int rule_size = 2;
-        int rule = 1;
+        int rule_size = 8;
+        int rule = 110;
         cell_init(&cell_group[i], i, status, status_size, status_group, rule_size, rule, input_size, input_group);
     }
 }
