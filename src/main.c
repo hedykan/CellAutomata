@@ -60,6 +60,7 @@ void cell_init_test1(struct Cell *cell_group, int size)
         status_group[1] = 1;
         int rule_size = 8;
         int rule = 110;
-        cell_init(&cell_group[i], i, status, status_size, status_group, rule_size, rule, input_size, input_group);
+        int transfer_status = 0;
+        cell_init(&cell_group[i], i, status, status_size, status_group, rule_size, rule, input_size, input_group, transfer_status);
     }
 }

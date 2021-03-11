@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include "cell.h"
 
-void cell_init(struct Cell *cell, int cell_id, int status, int status_size, int *status_group, int rule_size, int rule, int input_size, int *input_group)
+void cell_init(struct Cell *cell, int cell_id, int status, int status_size, int *status_group, int rule_size, int rule, int input_size, int *input_group, int transfer_status)
 {
     cell->id = cell_id;
     cell_rule_set(cell, rule_size, rule);
     cell_status_set(cell, status, status_size, status_group);
     cell_input_set(cell, input_size, input_group);
+    cell_transfer_status_set(cell, transfer_status);
 }
 
 void cell_rule_set(struct Cell *cell, int rule_size, int rule)
@@ -28,6 +29,11 @@ void cell_input_set(struct Cell *cell, int input_size, int *input_group)
     cell->input_group = input_group;
 }
 
+void cell_transfer_status_set(struct Cell *cell, int transfer_status)
+{
+    cell->input_transfer_status = transfer_status;
+}
+
 void cell_status_change(struct Cell *cell, int status)
 {
     cell->status = status;
@@ -46,6 +52,16 @@ void cell_free(struct Cell *cell, int size)
         free(cell[i].rule_group);
         free(cell[i].input_group);
     }
+}
+
+int calc_status_transfer(struct Cell *cell, int status)
+{
+    for(int i = 0; i < cell->status_size; i++)
+    {
+        if(cell->status_group[i] == status)
+            return cell->status_group[i];
+    }
+    return cell->input_transfer_status;
 }
 
 void calc_rule_group(struct Cell *cell, int rule, int rule_size) // 简易规则2规则组转换装置
@@ -79,9 +95,12 @@ void calc_cell(struct Cell *cell_group, int size)
 
 int calc_cell_status(struct Cell *cell_group, int local)
 {
-    int num = 0, i, status;
+    int num = 0, i, status, input_status;
     for(i = 0; i < cell_group[local].input_size; i++) // 计算状态号
-        num = (cell_group[cell_group[local].input_group[i]].status * calc_power(2, i)) + num;
+    {
+        input_status = calc_status_transfer(cell_group + local, cell_group[cell_group[local].input_group[i]].status);
+        num = (input_status * calc_power(2, i)) + num;
+    }
     status = cell_group[local].rule_group[num];
     return status;
 }
