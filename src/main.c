@@ -10,12 +10,12 @@ int main()
     while(1)
     {
         print_cell_all(cell_group, SIZE);
-        for(int i = 0; i < 1; i++)
+        for(int i = 0; i < 10; i++)
         {
             printf("calc: \n");
             print_cell_status(cell_group, SIZE);
             calc_cell(cell_group, SIZE);
-            print_cell_status(cell_group, SIZE);
+            /* print_cell_status(cell_group, SIZE); */
         }
         cell_scanf(cell_group);
     }
