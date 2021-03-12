@@ -12,7 +12,10 @@ int main()
         for(int i = 0; i < 10; i++)
         {
             printf("calc: \n");
-            print_cell_status(cell_group, SIZE);
+            print_cell_status_all(cell_group, SIZE);
+            printf("cell: ");
+            print_cell_status(cell_group, 1);
+            printf("\n");
             calc_cell(cell_group, SIZE);
             /* print_cell_status(cell_group, SIZE); */
         }

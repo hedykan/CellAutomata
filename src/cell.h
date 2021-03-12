@@ -33,4 +33,5 @@ int calc_power(int base, int times);
 void copy_cell_value(struct Cell *cell_group, struct Cell *cell_group_arr, int size);
 void print_cell(struct Cell cell);
 void print_cell_all(struct Cell *cell_group, int size);
-void print_cell_status(struct Cell *cell_group, int size);
+void print_cell_status(struct Cell *cell_group, int local);
+void print_cell_status_all(struct Cell *cell_group, int size);

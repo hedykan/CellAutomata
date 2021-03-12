@@ -98,7 +98,7 @@ int calc_cell_status(struct Cell *cell_group, int local)
     int num = 0, i, status, input_status;
     for(i = 0; i < cell_group[local].input_size; i++) // 计算状态号
     {
-        input_status = calc_status_transfer(cell_group + local, cell_group[cell_group[local].input_group[i]].status);
+        input_status = calc_status_transfer(cell_group + local, cell_group[cell_group[local].input_group[i]].status); // 输入状态转换
         num = (input_status * calc_power(2, i)) + num;
     }
     status = cell_group[local].rule_group[num];
@@ -151,9 +151,14 @@ void print_cell_all(struct Cell *cell_group, int size)
         print_cell(cell_group[i]);
 }
 
-void print_cell_status(struct Cell *cell_group, int size)
+void print_cell_status_all(struct Cell *cell_group, int size)
 {
     for(int i = 0; i < size; i++)
-        printf("%d", cell_group[i].status);
+        print_cell_status(cell_group, i);
     printf("\n");
+}
+
+void print_cell_status(struct Cell *cell_group, int local)
+{
+    printf("%d", cell_group[local].status);
 }
