@@ -1,5 +1,5 @@
 #include "cell.h"
-void cell_scanf(struct Cell *cell_group);
+int cell_scanf(struct Cell *cell_group);
 void cell_init_test1(struct Cell *cell_group, int size);
 
 int main()
@@ -7,26 +7,27 @@ int main()
     struct Cell cell_group[SIZE];
     cell_init_test1(cell_group, SIZE);
     print_cell_all(cell_group, SIZE);
+    int local = 0;
     while(1)
     {
         for(int i = 0; i < 10; i++)
         {
             printf("calc: \n");
             print_cell_status_all(cell_group, SIZE);
-            printf("cell: ");
-            print_cell_status(cell_group, 1);
+            printf("cell%d: ", local);
+            print_cell_status(cell_group, local);
             printf("\n");
             calc_cell(cell_group, SIZE);
             /* print_cell_status(cell_group, SIZE); */
         }
-        cell_scanf(cell_group);
+        local = cell_scanf(cell_group);
     }
     cell_free(cell_group, SIZE);
 
     return 0;
 }
 
-void cell_scanf(struct Cell *cell_group)
+int cell_scanf(struct Cell *cell_group)
 {
     int local, status, rule;
     char c;
@@ -38,7 +39,9 @@ void cell_scanf(struct Cell *cell_group)
         cell_status_change(cell_group + local, status);
         cell_rule_change(cell_group + local, rule);
         print_cell(cell_group[local]);
+        return local;
     }
+    return 0;
 }
 
 void cell_init_test1(struct Cell *cell_group, int size)
