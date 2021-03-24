@@ -1,26 +1,32 @@
 #include "cell.h"
+
 int cell_scanf(struct Cell *cell_group);
-void cell_init_test1(struct Cell *cell_group, int size);
+void cell_init_test(struct Cell *cell_group, int size);
 
 int main()
 {
     struct Cell cell_group[SIZE];
-    cell_init_test1(cell_group, SIZE);
+    cell_init_test(cell_group, SIZE);
     print_cell_all(cell_group, SIZE);
     int local = 0;
+    local = cell_scanf(cell_group);
     while(1)
     {
-        for(int i = 0; i < 10; i++)
-        {
-            printf("calc: \n");
-            print_cell_status_all(cell_group, SIZE);
-            printf("cell%d: ", local);
-            print_cell_status(cell_group, local);
-            printf("\n");
-            calc_cell(cell_group, SIZE);
-            /* print_cell_status(cell_group, SIZE); */
-        }
-        local = cell_scanf(cell_group);
+        /* for(int i = 0; i < 10; i++) */
+        /* { */
+        /*     printf("calc: \n"); */
+        /*     print_cell_status_all(cell_group, SIZE); */
+        /*     printf("cell%d: ", local); */
+        /*     print_cell_status(cell_group, local); */
+        /*     printf("\n"); */
+        /*     calc_cell(cell_group, SIZE); */
+        /*     print_cell_status(cell_group, SIZE); */
+        /* } */
+        //sleep(1);
+        calc_cell(cell_group, SIZE);
+        print_cell_group(cell_group, SIZE);
+        print_cell_total(cell_group, SIZE);
+        /* local = cell_scanf(cell_group); */
     }
     cell_free(cell_group, SIZE);
 
@@ -44,7 +50,7 @@ int cell_scanf(struct Cell *cell_group)
     return 0;
 }
 
-void cell_init_test1(struct Cell *cell_group, int size)
+void cell_init_test(struct Cell *cell_group, int size)
 {
     for(int i = 0; i < size; i++)
     {

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 10
+#define SIZE 100
 
 struct Cell
 {
@@ -15,6 +15,7 @@ struct Cell
     int input_transfer_status; // 输入状态转换器，有些输入来源状态需要转换
 };
 
+// cell_func.c
 // 初始化
 void cell_init(struct Cell *cell, int cell_id, int status, int status_size, int *status_group, int rule_size, int rule, int input_size, int *input_group, int transfer_status);
 void cell_rule_set(struct Cell *cell, int rule_size, int rule);
@@ -31,6 +32,12 @@ void calc_cell(struct Cell *cell_group, int size);
 int calc_cell_status(struct Cell *cell_group, int local);
 int calc_power(int base, int times);
 void copy_cell_value(struct Cell *cell_group, struct Cell *cell_group_arr, int size);
+
+// print.c
+int print_system_check();
+void print_clear();
+void print_cell_group(struct Cell *Cell, int size);
+void print_cell_total(struct Cell *Cell, int size);
 void print_cell(struct Cell cell);
 void print_cell_all(struct Cell *cell_group, int size);
 void print_cell_status(struct Cell *cell_group, int local);
