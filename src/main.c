@@ -22,7 +22,7 @@ int main()
         /*     calc_cell(cell_group, SIZE); */
         /*     print_cell_status(cell_group, SIZE); */
         /* } */
-        //sleep(1);
+        sleep(1);
         calc_cell(cell_group, SIZE);
         print_cell_group(cell_group, SIZE);
         print_cell_total(cell_group, SIZE);
@@ -71,7 +71,7 @@ void cell_init_test(struct Cell *cell_group, int size)
         status_group[0] = 0;
         status_group[1] = 1;
         int rule_size = 8;
-        int rule = 110;
+        int rule = 1;
         int transfer_status = 0;
         cell_init(&cell_group[i], i, status, status_size, status_group, rule_size, rule, input_size, input_group, transfer_status);
     }
