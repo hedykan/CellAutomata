@@ -28,12 +28,12 @@ void print_cell_group(struct Cell *Cell_group, int size)
     printf("\n");
 }
 
-void print_cell_total(struct Cell *Cell_group, int size)
+void print_cell_total(struct Cell *Cell_group, int size, char *name)
 {
     int happy = 0, angry = 0;
     for(int i = 0; i < size; i++)
         happy += Cell_group[i].status;
-    printf("happy = %d", happy);
+    printf("%s = %d\n", name, happy);
 }
 
 void print_cell(struct Cell cell)

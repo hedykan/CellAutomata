@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 100
+#include <unistd.h>
+#define SIZE 10
 
 struct Cell
 {
@@ -37,7 +38,7 @@ void copy_cell_value(struct Cell *cell_group, struct Cell *cell_group_arr, int s
 int print_system_check();
 void print_clear();
 void print_cell_group(struct Cell *Cell, int size);
-void print_cell_total(struct Cell *Cell, int size);
+void print_cell_total(struct Cell *Cell_group, int size, char *name);
 void print_cell(struct Cell cell);
 void print_cell_all(struct Cell *cell_group, int size);
 void print_cell_status(struct Cell *cell_group, int local);

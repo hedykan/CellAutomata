@@ -1,15 +1,19 @@
 #include "cell.h"
 
 int cell_scanf(struct Cell *cell_group);
-void cell_init_test(struct Cell *cell_group, int size);
+void cell_init_test(struct Cell *cell_group, int size, int rule_size, int rule);
 
-int main()
+int main() // TODO 输入多个scanf
 {
-    struct Cell cell_group[SIZE];
-    cell_init_test(cell_group, SIZE);
-    print_cell_all(cell_group, SIZE);
+    struct Cell cell_group1[SIZE], cell_group2[SIZE];
+    cell_init_test(cell_group1, SIZE, 8, 110);
+    cell_init_test(cell_group2, SIZE, 8, 64);
+    print_cell_all(cell_group1, SIZE);
+    print_cell_all(cell_group2, SIZE);
     int local = 0;
-    local = cell_scanf(cell_group);
+    local = cell_scanf(cell_group1);
+    scanf("%*c");
+    local = cell_scanf(cell_group2);
     while(1)
     {
         /* for(int i = 0; i < 10; i++) */
@@ -23,12 +27,16 @@ int main()
         /*     print_cell_status(cell_group, SIZE); */
         /* } */
         sleep(1);
-        calc_cell(cell_group, SIZE);
-        print_cell_group(cell_group, SIZE);
-        print_cell_total(cell_group, SIZE);
-        /* local = cell_scanf(cell_group); */
+        calc_cell(cell_group1, SIZE);
+        calc_cell(cell_group2, SIZE);
+        print_cell_status_all(cell_group1, SIZE);
+        print_cell_status_all(cell_group2, SIZE);
+        /* print_cell_group(cell_group1, SIZE); */
+        print_cell_total(cell_group1, SIZE, "happy");
+        print_cell_total(cell_group2, SIZE, "angry");
     }
-    cell_free(cell_group, SIZE);
+    cell_free(cell_group1, SIZE);
+    cell_free(cell_group2, SIZE);
 
     return 0;
 }
@@ -37,7 +45,6 @@ int cell_scanf(struct Cell *cell_group)
 {
     int local, status, rule;
     char c;
-    int i = 0;
     printf("user> ");
     scanf("%c,%d,%d,%d", &c, &local, &status, &rule);
     if(c == 'a')
@@ -50,7 +57,7 @@ int cell_scanf(struct Cell *cell_group)
     return 0;
 }
 
-void cell_init_test(struct Cell *cell_group, int size)
+void cell_init_test(struct Cell *cell_group, int size, int rule_size, int rule)
 {
     for(int i = 0; i < size; i++)
     {
@@ -70,8 +77,6 @@ void cell_init_test(struct Cell *cell_group, int size)
         int *status_group = (int *)malloc(2 * sizeof(int));
         status_group[0] = 0;
         status_group[1] = 1;
-        int rule_size = 8;
-        int rule = 1;
         int transfer_status = 0;
         cell_init(&cell_group[i], i, status, status_size, status_group, rule_size, rule, input_size, input_group, transfer_status);
     }
