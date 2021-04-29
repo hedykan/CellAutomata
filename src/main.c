@@ -2,6 +2,7 @@
 
 int cell_scanf(struct Cell *cell_group);
 void cell_init_test(struct Cell *cell_group, int size, int rule_size, int rule);
+void cell_rule_train(int *obj_rule, int obj_rule_size, struct Cell *cell_group);
 
 int main() // TODO 输入多个scanf
 {
@@ -59,11 +60,12 @@ int cell_scanf(struct Cell *cell_group)
 
 void cell_init_test(struct Cell *cell_group, int size, int rule_size, int rule)
 {
-    for(int i = 0; i < size; i++)
+    int i, j;
+    for(i = 0; i < size; i++)
     {
         int num = -1, input_size = 3;
         int *input_group = (int *)malloc(input_size * sizeof(int));
-        for(int j = 0; j < input_size; j++)
+        for(j = 0; j < input_size; j++)
         {
             if((i + num) < 0)
                 input_group[j] = size - 1;
@@ -81,3 +83,6 @@ void cell_init_test(struct Cell *cell_group, int size, int rule_size, int rule)
         cell_init(&cell_group[i], i, status, status_size, status_group, rule_size, rule, input_size, input_group, transfer_status);
     }
 }
+
+void cell_rule_train(int *obj_rule, int obj_rule_size, struct Cell *cell_group)
+{}

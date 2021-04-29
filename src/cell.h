@@ -16,6 +16,33 @@ struct Cell
     int input_transfer_status; // 输入状态转换器，有些输入来源状态需要转换
 };
 
+struct CellNew
+{
+    int id;
+    struct CellStatus *cell_status;
+    struct CellRule *cell_rule;
+    struct CellInput *cell_input;
+};
+
+struct CellStatus
+{
+    int status;
+    int status_size;
+    int *status_group;
+};
+
+struct CellRule
+{
+    int rule_size;
+    int *rule_group;
+};
+
+struct CellInput
+{
+    int input_size;
+    struct CellTest *cell_group;
+};
+
 // cell_func.c
 // 初始化
 void cell_init(struct Cell *cell, int cell_id, int status, int status_size, int *status_group, int rule_size, int rule, int input_size, int *input_group, int transfer_status);
