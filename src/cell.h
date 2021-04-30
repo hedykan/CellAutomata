@@ -28,7 +28,7 @@ struct CellStatus
 {
     int status;
     int status_size;
-    int *status_group;
+    int *status_group; // 按顺序排列
 };
 
 struct CellRule
@@ -40,7 +40,14 @@ struct CellRule
 struct CellInput
 {
     int input_size;
-    struct CellTest *cell_group;
+    struct CellNew *cell_group;
+    int input_status_swap;
+    int input_default_status;
+};
+
+struct CellInputTransfer // 有没必要转换，因为每个独立状态对于元胞自动机都是独立的
+{
+    int default_status;
 };
 
 // cell_func.c
