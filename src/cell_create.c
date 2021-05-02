@@ -1,7 +1,7 @@
 #include "cell.h"
 // 初始化函数
 
-struct Cell *cell_init(int status, int status_size, struct CellStatusNode *status_group, int rule_size, int *rule_group, int input_size, struct Cell *cell_group) {
+struct Cell *cell_init(int status, int status_size, struct CellStatusNode *status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, struct Cell *cell_group) {
     struct Cell *cell;
     cell = malloc(sizeof(struct Cell));
     cell_status_init(cell, status, status_size, status_group);
@@ -23,14 +23,14 @@ void cell_status_set(struct Cell *cell, int status, int status_size, struct Cell
     cell->cell_status->status_group = status_group;
 }
 
-void cell_rule_init(struct Cell *cell, int rule_size, int *rule_group) {
+void cell_rule_init(struct Cell *cell, int rule_size, struct CellRuleNode *rule_group) {
     struct CellRule *cell_rule;
     cell_rule = malloc(sizeof(struct CellRule));
     cell->cell_rule = cell_rule;
     cell_rule_set(cell, rule_size, rule_group);
 }
 
-void cell_rule_set(struct Cell *cell, int rule_size, int *rule_group) {
+void cell_rule_set(struct Cell *cell, int rule_size, struct CellRuleNode *rule_group) {
     cell->cell_rule->rule_size = rule_size;
     cell->cell_rule->rule_group = rule_group;
 }

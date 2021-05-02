@@ -20,21 +20,32 @@ int cell_scanf(struct Cell *cell_group)
     if(c == 'a')
     {
         /* cell_status_change(cell_group + local, status); */
+        cell_status_set(cell_group + local, status, cell_group[local].cell_status->status_size, cell_group[local].cell_status->status_group);
         /* cell_rule_change(cell_group + local, rule); */
         /* print_cell(cell_group[local]); */
+        print_cell(cell_group[local]);
         return local;
     }
     return 0;
 }
 
 void cell_init_test() {
-    int *rule_group;
-    struct CellStatusNode *status_group;
     struct Cell *cell, *cell_group;
-    status_group = malloc(sizeof(struct CellStatusNode));
-    rule_group = malloc(sizeof(int));
+    struct CellStatusNode *status_group;
+    struct CellRuleNode *rule_group;
     cell_group = malloc(sizeof(struct Cell));
-    cell = cell_init(0, 0, status_group, 0, rule_group, 0, cell_group);
+    status_group = malloc(sizeof(struct CellStatusNode) * 2);
+    rule_group = malloc(sizeof(struct CellRuleNode) * 2);
+
+    status_group[0].input_status = 0;
+    status_group[1].input_status = 1;
+
+    rule_group[0].input_status = 0;
+    rule_group[0].output_status = 1;
+    rule_group[1].input_status = 1;
+    rule_group[1].output_status = 0;
+
+    cell = cell_init(0, 2, status_group, 2, rule_group, 1, cell_group);
 
     print_cell_all(cell, 1);
     calc_cell_status_all(cell, 1);
