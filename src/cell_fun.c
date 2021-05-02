@@ -109,9 +109,9 @@ int calc_power(int base, int times)
 {
     if(times != 0)
     {
-        int output;
+        int output, i;
         output = base;
-        for(int i = 1; i < times; i++)
+        for(i = 1; i < times; i++)
             output = output * base;
         return output;
     }
