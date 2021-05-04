@@ -2,7 +2,7 @@
 
 void cell_init_test();
 int cell_scanf(struct Cell *cell_group);
-void cell_rule_train(int *obj_rule, int obj_rule_size, struct Cell *cell_group);
+void cell_rule_train(struct CellRuleNode *rule_group, int rule_size, struct Cell *cell);
 
 int main() // TODO 输入多个scanf
 {
@@ -64,5 +64,17 @@ void cell_init_test() {
     return;
 }
 
-void cell_rule_train(int *obj_rule, int obj_rule_size, struct Cell *cell_group)
-{}
+void cell_rule_train(struct CellRuleNode *rule_group, int rule_size, struct Cell *cell) {
+    int i, j;
+    for(j = 0; j < cell->cell_status->status_size; j++) { // 排列组合状态组和规则组
+
+        for(i = 0; i < rule_size; i++) { // 遍历符合的规则
+            cell->cell_input->cell_group[0].cell_status->status = rule_group[i].input_status;
+            calc_cell_status(cell);
+            if(cell->cell_status->status != rule_group[i].output_status)
+                break;
+            if(i == (rule_size - 1))
+                return;
+        }
+    }
+}
