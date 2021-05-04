@@ -46,10 +46,15 @@ void cell_init_test() {
     rule_group[1].output_status = 0;
 
     cell = cell_init(0, 2, status_group, 2, rule_group, 1, cell_group);
+    cell->id = 0;
+    cell->cell_input->cell_group = cell;
+    cell[0].cell_rule->rule_default_status = 0;
 
-    print_cell_all(cell, 1);
-    calc_cell_status_all(cell, 1);
-    print_cell_all(cell, 1);
+    int i;
+    for(i = 0; i < 10; i++) {
+        print_cell_all(cell, 1);
+        calc_cell_status_all(cell, 1);
+    }
 
     cell_free(cell);
     free(cell_group);
