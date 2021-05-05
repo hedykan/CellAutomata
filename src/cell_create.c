@@ -1,26 +1,27 @@
 #include "cell.h"
 // 初始化函数
 
-struct Cell *cell_init(int status, int status_size, struct CellStatusNode *status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, struct Cell *cell_group) {
+struct Cell *cell_init(int status, int status_size, struct CellStatusNode *input_status_group, struct CellStatusNode *output_status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, struct Cell *cell_group) {
     struct Cell *cell;
     cell = malloc(sizeof(struct Cell));
-    cell_status_init(cell, status, status_size, status_group);
+    cell_status_init(cell, status, status_size, input_status_group, output_status_group);
     cell_rule_init(cell, rule_size, rule_group);
     cell_input_init(cell, input_size, cell_group);
     return cell;
 }
 
-void cell_status_init(struct Cell *cell, int status, int status_size, struct CellStatusNode *status_group) {
+void cell_status_init(struct Cell *cell, int status, int status_size, struct CellStatusNode *input_status_group, struct CellStatusNode *output_status_group) {
     struct CellStatus *cell_status;
     cell_status = malloc(sizeof(struct CellStatus));
     cell->cell_status = cell_status;
-    cell_status_set(cell, status, status_size, status_group);
+    cell_status_set(cell, status, status_size, input_status_group, output_status_group);
 }
 
-void cell_status_set(struct Cell *cell, int status, int status_size, struct CellStatusNode *status_group) {
+void cell_status_set(struct Cell *cell, int status, int status_size, struct CellStatusNode *input_status_group, struct CellStatusNode *output_status_group) {
     cell->cell_status->status = status;
     cell->cell_status->status_size = status_size;
-    cell->cell_status->status_group = status_group;
+    cell->cell_status->input_status_group = input_status_group;
+    cell->cell_status->output_status_group = output_status_group;
 }
 
 void cell_rule_init(struct Cell *cell, int rule_size, struct CellRuleNode *rule_group) {

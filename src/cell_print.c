@@ -43,8 +43,10 @@ void print_cell(struct Cell cell)
     printf("cell_id: %d\n", cell.id);
     printf("status: %d\nrule_size: %d\ninput_size: %d\n", cell.cell_status->status, cell.cell_rule->rule_size, cell.cell_input->input_size);
     printf("status_group:{\nstatus_size: %d\n", cell.cell_status->status_size);
-    for(i = 0; i < cell.cell_status->status_size; i++)
-        printf("    status_group %d: %d\n", i, cell.cell_status->status_group[i].input_status);
+    for(i = 0; i < cell.cell_status->status_size; i++) {
+        printf("    input_status_group %d: %d\n", i, cell.cell_status->input_status_group[i].status);
+        printf("    output_status_group %d: %d\n", i, cell.cell_status->output_status_group[i].status);
+    }
     printf("}\n");
 
     printf("rule_group:{\nrule_size: %d\nrule_default_status: %d\n", cell.cell_rule->rule_size, cell.cell_rule->rule_default_status);
