@@ -73,7 +73,7 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
     int cell_status_size = cell->cell_status->status_size;
     int cell_rule_size = cell->cell_rule->rule_size;
     cell_rule_group = malloc(sizeof(struct CellRuleNode *) * cell_status_size);
-    int i, j;
+    int i, j, k;
     for(i = 0; i < cell_status_size; i++) {
         cell_rule_group[i] = malloc(sizeof(struct CellRuleNode) * cell_rule_size);
     }
@@ -86,18 +86,25 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
             cell->cell_input->cell_group[0].cell_status->status = rule_group[i].input_status;
             calc_cell_status(cell);
             // TODO 检验训练成功否
-            if(cell->cell_status->status != rule_group[i].output_status)
+            if(cell->cell_status->status != rule_group[i].output_status) {
+                printf("no, %d\n", i);
                 break;
+            }
             if(i == (rule_size - 1)) {
-                printf("ok, %d", i);
-                return;
+                printf("ok, %d\n", i);
+                for(k = 0; k < cell_rule_size; k++) {
+                    printf("%d -> %d ", cell->cell_rule->rule_group[k].input_status, cell->cell_rule->rule_group[k].output_status);
+                }
+                goto end;
             }
         }
     }
 
+end:
     for(i = 0; i < cell_status_size; i++) {
         free(cell_rule_group + i);
     }
+    return;
 }
 
 void calc_rule_all(struct Cell *cell, struct CellRuleNode **cell_rule_group) {
