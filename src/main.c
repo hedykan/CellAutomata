@@ -162,7 +162,7 @@ void calc_rule_select(int rule_size, int status_size, int rule_count, int status
         // TODO 这里cell_rule_group的索引需要status_size * 2 + rule_size
         int i;
         int cell_count = (rule_count - 1) * rule_size + status_count;
-        printf("cell_count: %d", cell_count);
+        printf("cell_count: %d, %d, %d", cell_count, rule_count, status_count);
         for(i = 0; i < rule_size; i++){
             printf("[%d -> %d] ", cell_rule_road[i].input_status, cell_rule_road[i].output_status);
             cell_rule_group[cell_count][i] = cell_rule_road[i];
