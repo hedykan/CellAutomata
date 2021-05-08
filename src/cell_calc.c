@@ -34,8 +34,8 @@ void calc_cell_status_get(struct Cell *cell) {
 // 获取匹配的状态
 int calc_cell_status_match(struct Cell *cell) {
     int i;
-    for(i = 0; i < cell->cell_status->status_size; i++) {
-        if(cell->cell_status->input_status_group[i].status == cell->cell_input->input_status_swap) {
+    for(i = 0; i < cell->cell_rule->rule_size; i++) {
+        if(cell->cell_rule->rule_group[i].input_status == cell->cell_input->input_status_swap) {
             return cell->cell_rule->rule_group[i].output_status;
         }
     }
