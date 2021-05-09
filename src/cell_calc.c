@@ -29,16 +29,13 @@ int calc_cell_input_status(struct Cell *cell) {
 // 获取输入状态
 void calc_cell_status_get(struct Cell *cell) {
     cell->cell_input->input_status_swap = calc_cell_input_status(cell);
-    printf("swap = %d", cell->cell_input->input_status_swap);
 }
 
 // 获取匹配的状态
 int calc_cell_status_match(struct Cell *cell) {
     int i;
     for(i = 0; i < cell->cell_rule->rule_size; i++) {
-        printf("input = %d, obj = %d\n", cell->cell_input->input_status_swap, cell->cell_rule->rule_group[i].input_status);
         if(cell->cell_rule->rule_group[i].input_status == cell->cell_input->input_status_swap) {
-            printf("output = %d\n", cell->cell_rule->rule_group[i].output_status);
             return cell->cell_rule->rule_group[i].output_status;
         }
     }
