@@ -104,9 +104,10 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
     }
 
 end:
-    for(i = ((cell_status_size * cell_rule_size) - 1); i > 0; i--) {
-        free(&cell_rule_group[i]);
+    for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
+        free(cell_rule_group[i]);
     }
+    free(cell_rule_group);
     return;
 }
 
@@ -132,15 +133,11 @@ void calc_rule_all(struct Cell *cell, struct CellRuleNode **cell_rule_group) {
     calc_rule_select(rule_size, status_size, 0, 0, cell_rule_all, cell_rule_group, cell_rule_road);
 
     // free
-    for(i = (rule_size - 1); i > 0; i--) {
-        for(j = (status_size - 1); j > 0; j--) {
-            free(&cell_rule_all[i][j]);
-        }
-        free(&cell_rule_all[i]);
+    for(i = 0; i < rule_size; i++) {
+        free(cell_rule_all[i]);
     }
-    for(i = (rule_size - 1); i > 0; i--) {
-        free(&cell_rule_road[i]);
-    }
+    free(cell_rule_all);
+    free(cell_rule_road);
 }
 
 void calc_rule_select(int rule_size, int status_size, int rule_count, int status_count, struct CellRuleNode **cell_rule_all, struct CellRuleNode **cell_rule_group, struct CellRuleNode *cell_rule_road) {
