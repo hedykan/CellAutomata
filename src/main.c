@@ -79,21 +79,23 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
     }
     // 获取所有规则
     // TODO 获得的cell_rule_group只有status_size, 实际需要status_size * rule_size
-    calc_rule_all(cell, cell_rule_group);
+    /* calc_rule_all(cell, cell_rule_group); */
 
     for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
         cell->cell_rule->rule_group = cell_rule_group[i];
+        printf("group:%d\n", cell_rule_group[i]);
         for(j = 0; j < rule_size; j++) {
             cell->cell_input->cell_group[0].cell_status->status = rule_group[j].input_status;
-            calc_cell_status(cell);
+            calc_cell_status_all(cell, 1);
             // TODO 检验训练成功否
-            print_cell_all(cell, 1);
-            printf("check: %d, %d", cell->cell_status->status, rule_group[j].output_status);
+            /* print_cell_all(cell, 1); */
+            printf("check: %d, %d\n", cell->cell_status->status, rule_group[j].output_status);
             if(cell->cell_status->status != rule_group[j].output_status) {
-                /* printf("check: %d, %d\n", cell->cell_status->status, rule_group[j].output_status); */
+                printf("check: %d, %d\n", cell->cell_status->status, rule_group[j].output_status);
                 printf("no, i=%d, j=%d\n\n", i, j);
                 break;
             }
+            printf("continue\n");
             if(j == (rule_size - 1)) {
                 printf("ok, %d\n", j);
                 for(k = 0; k < cell_rule_size; k++) {
@@ -105,7 +107,7 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
     }
 
 end:
-    for(i = 0; i < cell_status_size; i++) {
+    for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
         free(cell_rule_group + i);
     }
     return;
