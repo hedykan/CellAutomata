@@ -57,7 +57,15 @@ void cell_init_test() {
 
     print_cell_all(cell, 1);
 
-    cell_rule_train(cell, rule_group, 2);
+    // train
+    struct CellRuleNode *rule_group1;
+    rule_group1 = malloc(sizeof(struct CellRuleNode) * 2);
+    rule_group1[0].input_status = 0;
+    rule_group1[0].output_status = 1;
+    rule_group1[1].input_status = 1;
+    rule_group1[1].output_status = 1;
+    cell_rule_train(cell, rule_group1, 2);
+    free(rule_group1);
 
     cell_free(cell);
     free(cell_group);
@@ -95,9 +103,6 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
             }
             if(j == (rule_size - 1)) {
                 printf("ok, %d\n", j);
-                for(k = 0; k < cell_rule_size; k++) {
-                    printf("%d -> %d ", cell->cell_rule->rule_group[k].input_status, cell->cell_rule->rule_group[k].output_status);
-                }
                 goto end;
             }
         }
