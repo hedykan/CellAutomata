@@ -4,7 +4,8 @@ void cell_init_test();
 int cell_scanf(struct Cell *cell_group);
 void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rule_size);
 void calc_rule_all(struct Cell *cell, struct CellRuleNode **cell_rule_group);
-void calc_rule_select(int rule_size, int status_size, int rule_count, int status_count, struct CellRuleNode **cell_rule_all, struct CellRuleNode **cell_rule_group, struct CellRuleNode *cell_rule_road);
+void calc_rule_select(int rule_size, int status_size, int rule_count, struct CellRuleNode **cell_rule_all, struct CellRuleNode **cell_rule_group, struct CellRuleNode *cell_rule_road);
+void print_group(struct CellRuleNode *rule_group, int rule_size);
 
 int main() // TODO 输入多个scanf
 {
@@ -55,17 +56,29 @@ void cell_init_test() {
     cell->cell_input->cell_group = cell;
     cell[0].cell_rule->rule_default_status = 0;
 
-    print_cell_all(cell, 1);
+    /* print_cell_all(cell, 1); */
+    printf("first:\n");
+    print_group(cell->cell_rule->rule_group, cell->cell_rule->rule_size);
+    printf("\n");
 
-    // train
+    // 训练
     struct CellRuleNode *rule_group1;
     rule_group1 = malloc(sizeof(struct CellRuleNode) * 2);
     rule_group1[0].input_status = 0;
     rule_group1[0].output_status = 1;
     rule_group1[1].input_status = 1;
     rule_group1[1].output_status = 1;
+    printf("object:\n");
+    print_group(rule_group1, 2);
+    printf("\n");
+
     cell_rule_train(cell, rule_group1, 2);
+
+    printf("train:\n");
+    print_group(cell->cell_rule->rule_group, cell->cell_rule->rule_size);
+    printf("\n");
     free(rule_group1);
+
 
     cell_free(cell);
     free(cell_group);
@@ -86,7 +99,6 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
         cell_rule_group[i] = malloc(sizeof(struct CellRuleNode) * cell_rule_size);
     }
     // 获取所有规则
-    // TODO 获得的cell_rule_group只有status_size, 实际需要status_size * rule_size
     calc_rule_all(cell, cell_rule_group);
 
     for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
@@ -95,14 +107,13 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
             cell->cell_input->cell_group[0].cell_status->status = rule_group[j].input_status;
             calc_cell_status_all(cell, 1);
             // TODO 检验训练成功否
-            /* print_cell_all(cell, 1); */
             printf("check: %d, %d\n", cell->cell_status->status, rule_group[j].output_status);
             if(cell->cell_status->status != rule_group[j].output_status) {
                 printf("no, i=%d, j=%d\n\n", i, j);
                 break;
             }
             if(j == (rule_size - 1)) {
-                printf("ok, %d\n", j);
+                printf("ok, %d\n\n", j);
                 goto end;
             }
         }
@@ -135,7 +146,7 @@ void calc_rule_all(struct Cell *cell, struct CellRuleNode **cell_rule_group) {
     // 排列组合所有情况
     struct CellRuleNode *cell_rule_road;
     cell_rule_road = malloc(sizeof(struct CellRuleNode) * rule_size);
-    calc_rule_select(rule_size, status_size, 0, 0, cell_rule_all, cell_rule_group, cell_rule_road);
+    calc_rule_select(rule_size, status_size, 0, cell_rule_all, cell_rule_group, cell_rule_road);
 
     // free
     for(i = 0; i < rule_size; i++) {
@@ -145,24 +156,29 @@ void calc_rule_all(struct Cell *cell, struct CellRuleNode **cell_rule_group) {
     free(cell_rule_road);
 }
 
-void calc_rule_select(int rule_size, int status_size, int rule_count, int status_count, struct CellRuleNode **cell_rule_all, struct CellRuleNode **cell_rule_group, struct CellRuleNode *cell_rule_road) {
+void calc_rule_select(int rule_size, int status_size, int rule_count, struct CellRuleNode **cell_rule_all, struct CellRuleNode **cell_rule_group, struct CellRuleNode *cell_rule_road) {
+    int i;
     if(rule_count >= rule_size) {
         // 在这把经历的路径保存
-        // TODO 这里cell_rule_group的索引需要status_size * 2 + rule_size
-        int i, cell_count = 0;
+        int cell_count = 0;
         for(i = 0; i < rule_size; i++) {
             cell_count = cell_count + (cell_rule_road[i].output_status * calc_power(status_size, i));
         }
         for(i = 0; i < rule_size; i++){
-            /* printf("[%d -> %d] ", cell_rule_road[i].input_status, cell_rule_road[i].output_status); */
             cell_rule_group[cell_count][i] = cell_rule_road[i];
         }
         return;
     }
-    int i;
     for(i = 0; i < status_size; i++) {
         cell_rule_road[rule_count] = cell_rule_all[rule_count][i];
-        calc_rule_select(rule_size, status_size, rule_count + 1, i, cell_rule_all, cell_rule_group, cell_rule_road);
+        calc_rule_select(rule_size, status_size, rule_count + 1, cell_rule_all, cell_rule_group, cell_rule_road);
     }
     return;
+}
+
+void print_group(struct CellRuleNode *rule_group, int rule_size) {
+    int i;
+    for(i = 0; i < rule_size; i++) {
+        printf("%d -> %d\n", rule_group[i].input_status, rule_group[i].output_status);
+    }
 }
