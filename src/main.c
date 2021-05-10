@@ -7,7 +7,8 @@ void calc_rule_all(struct Cell *cell, struct CellRuleNode **cell_rule_group);
 void calc_rule_select(int rule_size, int status_size, int rule_count, struct CellRuleNode **cell_rule_all, struct CellRuleNode **cell_rule_group, struct CellRuleNode *cell_rule_road);
 void print_group(struct CellRuleNode *rule_group, int rule_size);
 
-int main() // TODO 输入多个scanf
+// TODO 状态组的扩展
+int main()
 {
     cell_init_test();
 
@@ -43,6 +44,7 @@ void cell_init_test() {
 
     input_status_group[0].status = 0;
     input_status_group[1].status = 1;
+
     output_status_group[0].status = 0;
     output_status_group[1].status = 1;
 
@@ -51,7 +53,7 @@ void cell_init_test() {
     rule_group[1].input_status = 1;
     rule_group[1].output_status = 0;
 
-    cell = cell_init(0, 2, input_status_group, output_status_group, 2, rule_group, 1, cell_group);
+    cell = cell_init(0, 2, output_status_group, 2, rule_group, 1, input_status_group, cell_group);
     cell->id = 0;
     cell->cell_input->cell_group = cell;
     cell[0].cell_rule->rule_default_status = 0;
@@ -106,7 +108,6 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
         for(j = 0; j < rule_size; j++) {
             cell->cell_input->cell_group[0].cell_status->status = rule_group[j].input_status;
             calc_cell_status_all(cell, 1);
-            // TODO 检验训练成功否
             printf("check: %d, %d\n", cell->cell_status->status, rule_group[j].output_status);
             if(cell->cell_status->status != rule_group[j].output_status) {
                 printf("no, i=%d, j=%d\n\n", i, j);

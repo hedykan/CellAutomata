@@ -1,10 +1,6 @@
 #include "cell.h"
-/* int calc_power(int base, int times); */
 // 计算
-// 先获取全部状态再计算，不然会有不同时更新的情况出现
-// TODO 缓存状态
 
-// 计算输入状态
 int calc_power(int base, int times) {
     if(times != 0) {
         int output, i;

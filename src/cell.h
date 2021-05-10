@@ -11,18 +11,17 @@ struct Cell
     struct CellInput *cell_input;
 };
 
+struct CellStatusNode
+{
+    int status;
+};
+
 struct CellStatus
 {
     int status; // 当前状态
     int status_size; // 状态数
-    struct CellStatusNode *input_status_group; // 状态类型
     struct CellStatusNode *output_status_group;
     int status_default; // 默认开始状态
-};
-
-struct CellStatusNode
-{
-    int status;
 };
 
 struct CellRule
@@ -41,6 +40,7 @@ struct CellRuleNode
 struct CellInput
 {
     int input_size;
+    struct CellStatusNode *input_status_group; // 状态类型
     struct Cell *cell_group;
     int input_status_swap;
 };
@@ -61,13 +61,13 @@ void print_cell_status(struct Cell *cell_group, int local);
 void print_cell_status_all(struct Cell *cell_group, int size);
 
 // cell_create.c
-struct Cell *cell_init(int status, int status_size, struct CellStatusNode *input_status_group, struct CellStatusNode *output_status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, struct Cell *cell_group);
-void cell_status_init(struct Cell *cell, int status, int status_size, struct CellStatusNode *input_status_group, struct CellStatusNode *output_status_group);
+struct Cell *cell_init(int status, int status_size, struct CellStatusNode *output_status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
+void cell_status_init(struct Cell *cell, int status, int status_size, struct CellStatusNode *output_status_group);
 void cell_rule_init(struct Cell *cell, int rule_size, struct CellRuleNode *rule_group);
-void cell_input_init(struct Cell *cell, int input_size, struct Cell *cell_group);
-void cell_status_set(struct Cell *cell, int status, int status_size, struct CellStatusNode *input_status_group, struct CellStatusNode *output_status_group);
+void cell_input_init(struct Cell *cell, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
+void cell_status_set(struct Cell *cell, int status, int status_size, struct CellStatusNode *output_status_group);
 void cell_rule_set(struct Cell *cell, int rule_size, struct CellRuleNode *rule_group);
-void cell_input_set(struct Cell *cell, int input_size, struct Cell *cell_group);
+void cell_input_set(struct Cell *cell, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
 void cell_free(struct Cell *cell);
 void cell_free_all(struct Cell *cell, int cell_size);
 
