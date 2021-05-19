@@ -8,6 +8,7 @@ void calc_rule_select(int rule_size, int status_size, int rule_count, struct Cel
 void print_group(struct CellRuleNode *rule_group, int rule_size);
 
 // TODO 状态组的扩展
+// TODO 输入输出类型转换
 int main()
 {
     cell_init_test();
@@ -48,7 +49,7 @@ void cell_init_test() {
     output_status_group[0].status = 0;
     output_status_group[1].status = 1;
 
-    rule_group[0].input_status = 0;
+    rule_group[0].input_status = 2;
     rule_group[0].output_status = 1;
     rule_group[1].input_status = 1;
     rule_group[1].output_status = 0;
@@ -58,7 +59,6 @@ void cell_init_test() {
     cell->cell_input->cell_group = cell;
     cell[0].cell_rule->rule_default_status = 0;
 
-    /* print_cell_all(cell, 1); */
     printf("first:\n");
     print_group(cell->cell_rule->rule_group, cell->cell_rule->rule_size);
     printf("\n");
@@ -69,7 +69,7 @@ void cell_init_test() {
     rule_group1[0].input_status = 0;
     rule_group1[0].output_status = 1;
     rule_group1[1].input_status = 1;
-    rule_group1[1].output_status = 1;
+    rule_group1[1].output_status = 0;
     printf("object:\n");
     print_group(rule_group1, 2);
     printf("\n");
@@ -81,6 +81,22 @@ void cell_init_test() {
     printf("\n");
     free(rule_group1);
 
+
+    int i;
+    for(i = 0; i < 10; i++) {
+        calc_cell_status_all(cell, 1);
+        print_cell_total(cell, 1, "not");
+    }
+
+    // TODO cell_rule内存出问题了, 训练更改了规则组，释放了规则组内存
+    struct CellStatusNode status_node;
+    struct CellRuleNode rule_node;
+    cell_status_add(cell, status_node);
+    printf("#%d, %d\n", rule_group, cell->cell_rule->rule_group);
+    rule_node.input_status = 2;
+    rule_node.output_status = 2;
+    cell_rule_add(cell, rule_node);
+    print_cell_all(cell, 1);
 
     cell_free(cell);
     free(cell_group);
@@ -96,7 +112,7 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
     int cell_status_size = cell->cell_status->status_size;
     int cell_rule_size = cell->cell_rule->rule_size;
     cell_rule_group = malloc(sizeof(struct CellRuleNode *) * (cell_status_size * cell_rule_size));
-    int i, j, k;
+    int i, j;
     for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
         cell_rule_group[i] = malloc(sizeof(struct CellRuleNode) * cell_rule_size);
     }
@@ -120,11 +136,11 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
         }
     }
 
-end:
-    for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
-        free(cell_rule_group[i]);
-    }
-    free(cell_rule_group);
+end:  // 这里free会造成外面无法获取cell_rule
+    /* for(i = 0; i < (cell_status_size * cell_rule_size); i++) { */
+    /*     free(cell_rule_group[i]); */
+    /* } */
+    /* free(cell_rule_group); */
     return;
 }
 

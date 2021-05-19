@@ -23,6 +23,13 @@ void cell_status_set(struct Cell *cell, int status, int status_size, struct Cell
     cell->cell_status->output_status_group = output_status_group;
 }
 
+void cell_status_add(struct Cell *cell, struct CellStatusNode status_node) {
+    int size = cell->cell_status->status_size;
+    cell->cell_status->output_status_group = realloc(cell->cell_status->output_status_group, (sizeof(struct CellStatusNode) * (size + 1)));
+    cell->cell_status->output_status_group[size] = status_node;
+    cell->cell_status->status_size = size + 1;
+}
+
 void cell_rule_init(struct Cell *cell, int rule_size, struct CellRuleNode *rule_group) {
     struct CellRule *cell_rule;
     cell_rule = malloc(sizeof(struct CellRule));
@@ -33,6 +40,13 @@ void cell_rule_init(struct Cell *cell, int rule_size, struct CellRuleNode *rule_
 void cell_rule_set(struct Cell *cell, int rule_size, struct CellRuleNode *rule_group) {
     cell->cell_rule->rule_size = rule_size;
     cell->cell_rule->rule_group = rule_group;
+}
+
+void cell_rule_add(struct Cell *cell, struct CellRuleNode rule_node) {
+    int size = cell->cell_rule->rule_size;
+    cell->cell_rule->rule_group = realloc(cell->cell_rule->rule_group, (sizeof(struct CellRuleNode) * (size + 1)));
+    cell->cell_rule->rule_group[size] = rule_node;
+    cell->cell_rule->rule_size = size + 1;
 }
 
 void cell_input_init(struct Cell *cell, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group) {
@@ -46,6 +60,13 @@ void cell_input_set(struct Cell *cell, int input_size, struct CellStatusNode *in
     cell->cell_input->input_size = input_size;
     cell->cell_input->input_status_group = input_status_group;
     cell->cell_input->cell_group = cell_group;
+}
+
+void cell_input_add(struct Cell *cell, struct CellStatusNode status_node) {
+    int size = cell->cell_input->input_status_size;
+    cell->cell_input->input_status_group = realloc(cell->cell_input->input_status_group, (sizeof(struct CellStatusNode) * (size + 1)));
+    cell->cell_input->input_status_group[size] = status_node;
+    cell->cell_input->input_status_size = size + 1;
 }
 
 void cell_free(struct Cell *cell) {
