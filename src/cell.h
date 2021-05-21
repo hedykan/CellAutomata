@@ -62,7 +62,7 @@ void print_cell_status(struct Cell *cell_group, int local);
 void print_cell_status_all(struct Cell *cell_group, int size);
 
 // cell_create.c
-struct Cell *cell_init(int status, int status_size, struct CellStatusNode *output_status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
+struct Cell *cell_init(int status, int status_size, struct CellStatusNode *output_status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, int input_status_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
 void cell_status_init(struct Cell *cell, int status, int status_size, struct CellStatusNode *output_status_group);
 void cell_status_set(struct Cell *cell, int status, int status_size, struct CellStatusNode *output_status_group);
 void cell_status_add(struct Cell *cell, struct CellStatusNode status_node);
@@ -71,8 +71,8 @@ void cell_rule_init(struct Cell *cell, int rule_size, struct CellRuleNode *rule_
 void cell_rule_set(struct Cell *cell, int rule_size, struct CellRuleNode *rule_group);
 void cell_rule_add(struct Cell *cell, struct CellRuleNode rule_node);
 
-void cell_input_init(struct Cell *cell, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
-void cell_input_set(struct Cell *cell, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
+void cell_input_init(struct Cell *cell, int input_size, int input_status_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
+void cell_input_set(struct Cell *cell, int input_size, int input_status_size, struct CellStatusNode *input_status_group, struct Cell *cell_group);
 void cell_input_add(struct Cell *cell, struct CellStatusNode status_node);
 
 void cell_free(struct Cell *cell);

@@ -38,23 +38,29 @@ void cell_init_test() {
     struct Cell *cell, *cell_group;
     struct CellStatusNode *input_status_group, *output_status_group;
     struct CellRuleNode *rule_group;
+    int input_size, output_size, rule_size, i;
     cell_group = malloc(sizeof(struct Cell));
     input_status_group = malloc(sizeof(struct CellStatusNode) * 2);
     output_status_group = malloc(sizeof(struct CellStatusNode) * 2);
     rule_group = malloc(sizeof(struct CellRuleNode) * 2);
 
-    input_status_group[0].status = 0;
-    input_status_group[1].status = 1;
+    input_size = 2;
+    for(i = 0; i < input_size; i++) {
+        input_status_group[i].status = i;
+    }
 
-    output_status_group[0].status = 0;
-    output_status_group[1].status = 1;
+    output_size = 2;
+    for(i = 0; i < output_size; i++) {
+        output_status_group[i].status = i;
+    }
 
-    rule_group[0].input_status = 2;
-    rule_group[0].output_status = 1;
-    rule_group[1].input_status = 1;
-    rule_group[1].output_status = 0;
+    rule_size = input_size;
+    for(i = 0; i < rule_size; i++) {
+        rule_group[i].input_status = i;
+        rule_group[i].output_status = i;
+    }
 
-    cell = cell_init(0, 2, output_status_group, 2, rule_group, 1, input_status_group, cell_group);
+    cell = cell_init(0, output_size, output_status_group, rule_size, rule_group, 1, input_size, input_status_group, cell_group);
     cell->id = 0;
     cell->cell_input->cell_group = cell;
     cell[0].cell_rule->rule_default_status = 0;
@@ -82,20 +88,18 @@ void cell_init_test() {
     free(rule_group1);
 
 
-    int i;
     for(i = 0; i < 10; i++) {
         calc_cell_status_all(cell, 1);
         print_cell_total(cell, 1, "not");
     }
 
     // TODO cell_rule内存出问题了, 训练更改了规则组，释放了规则组内存
+    printf("#%d, %d\n", rule_group, cell->cell_rule->rule_group);
     struct CellStatusNode status_node;
     struct CellRuleNode rule_node;
     cell_status_add(cell, status_node);
-    printf("#%d, %d\n", rule_group, cell->cell_rule->rule_group);
-    rule_node.input_status = 2;
-    rule_node.output_status = 2;
     cell_rule_add(cell, rule_node);
+    cell_input_add(cell, status_node);
     print_cell_all(cell, 1);
 
     cell_free(cell);

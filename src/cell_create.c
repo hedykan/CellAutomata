@@ -1,12 +1,12 @@
 #include "cell.h"
 // 初始化函数
 
-struct Cell *cell_init(int status, int status_size, struct CellStatusNode *output_status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group) {
+struct Cell *cell_init(int status, int status_size, struct CellStatusNode *output_status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, int input_status_size, struct CellStatusNode *input_status_group, struct Cell *cell_group) {
     struct Cell *cell;
     cell = malloc(sizeof(struct Cell));
     cell_status_init(cell, status, status_size, output_status_group);
     cell_rule_init(cell, rule_size, rule_group);
-    cell_input_init(cell, input_size, input_status_group, cell_group);
+    cell_input_init(cell, input_size, input_status_size, input_status_group, cell_group);
     return cell;
 }
 
@@ -49,15 +49,16 @@ void cell_rule_add(struct Cell *cell, struct CellRuleNode rule_node) {
     cell->cell_rule->rule_size = size + 1;
 }
 
-void cell_input_init(struct Cell *cell, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group) {
+void cell_input_init(struct Cell *cell, int input_size, int input_status_size, struct CellStatusNode *input_status_group, struct Cell *cell_group) {
     struct CellInput *cell_input;
     cell_input = malloc(sizeof(struct CellInput));
     cell->cell_input = cell_input;
-    cell_input_set(cell, input_size, input_status_group, cell_group);
+    cell_input_set(cell, input_size, input_status_size, input_status_group, cell_group);
 }
 
-void cell_input_set(struct Cell *cell, int input_size, struct CellStatusNode *input_status_group, struct Cell *cell_group) {
+void cell_input_set(struct Cell *cell, int input_size, int input_status_size, struct CellStatusNode *input_status_group, struct Cell *cell_group) {
     cell->cell_input->input_size = input_size;
+    cell->cell_input->input_status_size = input_status_size;
     cell->cell_input->input_status_group = input_status_group;
     cell->cell_input->cell_group = cell_group;
 }
