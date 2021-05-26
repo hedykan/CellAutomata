@@ -116,7 +116,7 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
     int cell_status_size = cell->cell_status->status_size;
     int cell_rule_size = cell->cell_rule->rule_size;
     cell_rule_group = malloc(sizeof(struct CellRuleNode *) * (cell_status_size * cell_rule_size));
-    int i, j;
+    int i, j, k;
     for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
         cell_rule_group[i] = malloc(sizeof(struct CellRuleNode) * cell_rule_size);
     }
@@ -124,7 +124,10 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
     calc_rule_all(cell, cell_rule_group);
 
     for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
-        cell->cell_rule->rule_group = cell_rule_group[i];
+        for(k = 0; k < rule_size; k++) {
+            cell->cell_rule->rule_group[k].input_status = cell_rule_group[i][k].input_status;
+            cell->cell_rule->rule_group[k].output_status = cell_rule_group[i][k].output_status;
+        }
         for(j = 0; j < rule_size; j++) {
             cell->cell_input->cell_group[0].cell_status->status = rule_group[j].input_status;
             calc_cell_status_all(cell, 1);
@@ -141,10 +144,10 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
     }
 
 end:  // 这里free会造成外面无法获取cell_rule
-    /* for(i = 0; i < (cell_status_size * cell_rule_size); i++) { */
-    /*     free(cell_rule_group[i]); */
-    /* } */
-    /* free(cell_rule_group); */
+    for(i = 0; i < (cell_status_size * cell_rule_size); i++) {
+        free(cell_rule_group[i]);
+    }
+    free(cell_rule_group);
     return;
 }
 
