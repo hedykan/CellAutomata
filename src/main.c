@@ -65,10 +65,6 @@ void cell_init_test() {
     cell->cell_input->cell_group = cell;
     cell[0].cell_rule->rule_default_status = 0;
 
-    printf("first:\n");
-    print_group(cell->cell_rule->rule_group, cell->cell_rule->rule_size);
-    printf("\n");
-
     // 训练
     struct CellRuleNode *rule_group1;
     rule_group1 = malloc(sizeof(struct CellRuleNode) * 2);
@@ -76,15 +72,8 @@ void cell_init_test() {
     rule_group1[0].output_status = 1;
     rule_group1[1].input_status = 1;
     rule_group1[1].output_status = 0;
-    printf("object:\n");
-    print_group(rule_group1, 2);
-    printf("\n");
 
     cell_rule_train(cell, rule_group1, 2);
-
-    printf("train:\n");
-    print_group(cell->cell_rule->rule_group, cell->cell_rule->rule_size);
-    printf("\n");
     free(rule_group1);
 
 
@@ -93,8 +82,6 @@ void cell_init_test() {
         print_cell_total(cell, 1, "not");
     }
 
-    // TODO cell_rule内存出问题了, 训练更改了规则组，释放了规则组内存
-    printf("#%d, %d\n", rule_group, cell->cell_rule->rule_group);
     struct CellStatusNode status_node;
     struct CellRuleNode rule_node;
     cell_status_add(cell, status_node);
