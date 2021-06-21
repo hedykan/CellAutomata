@@ -85,3 +85,6 @@ void calc_cell_status_get(struct Cell *cell);
 int calc_cell_status_match(struct Cell *cell);
 void calc_cell_status(struct Cell *cell);
 void calc_cell_status_all(struct Cell *cell, int cell_size);
+
+// cell_train.c
+void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rule_size);
