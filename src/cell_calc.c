@@ -12,6 +12,7 @@ int calc_power(int base, int times) {
     return 1;
 }
 
+//TODO 树型查询
 int calc_cell_input_status(struct Cell *cell) {
     int i, status = 0, obj_status, base;
     for(i = 0; i < cell->cell_input->input_size; i++) {

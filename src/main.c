@@ -79,6 +79,7 @@ void cell_init_test() {
         print_cell_total(cell, 1, "not");
     }
 
+    // 新增测试
     struct CellStatusNode status_node;
     struct CellRuleNode rule_node;
     cell_status_add(cell, status_node);

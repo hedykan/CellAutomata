@@ -20,7 +20,7 @@ struct CellStatus
 {
     int status; // 当前状态
     int status_size; // 状态数
-    struct CellStatusNode *output_status_group;
+    struct CellStatusNode *output_status_group; // 输出状态标识符
     int status_default; // 默认开始状态
 };
 
@@ -41,7 +41,7 @@ struct CellInput
 {
     int input_size;
     int input_status_size;
-    struct CellStatusNode *input_status_group; // 状态类型
+    struct CellStatusNode *input_status_group; // 允许的输入状态标识
     struct Cell *cell_group;
     int input_status_swap;
 };

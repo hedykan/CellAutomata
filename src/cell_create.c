@@ -4,8 +4,8 @@
 struct Cell *cell_init(int status, int status_size, struct CellStatusNode *output_status_group, int rule_size, struct CellRuleNode *rule_group, int input_size, int input_status_size, struct CellStatusNode *input_status_group, struct Cell *cell_group) {
     struct Cell *cell;
     cell = malloc(sizeof(struct Cell));
-    cell_status_init(cell, status, status_size, output_status_group);
-    cell_rule_init(cell, rule_size, rule_group);
+    cell_status_init(cell, status, status_size, output_status_group); // cell自身状态设置
+    cell_rule_init(cell, rule_size, rule_group); // cell规则组设置
     cell_input_init(cell, input_size, input_status_size, input_status_group, cell_group);
     return cell;
 }
