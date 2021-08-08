@@ -20,7 +20,7 @@ void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rul
             cell->cell_rule->rule_group[k].output_status = cell_rule_group[i][k].output_status;
         }
         for(j = 0; j < rule_size; j++) {
-            cell->cell_input->cell_group[0].cell_status->status = rule_group[j].input_status;
+            cell->cell_input->input_group[0].cell_status->status = rule_group[j].input_status;
             calc_cell_status_all(cell, 1);
             printf("check: %d, %d\n", cell->cell_status->status, rule_group[j].output_status);
             if(cell->cell_status->status != rule_group[j].output_status) {
@@ -54,7 +54,7 @@ void calc_rule_all(struct Cell *cell, struct CellRuleNode **cell_rule_group) {
         cell_rule_all[i] = malloc(sizeof(struct CellRuleNode) * status_size);
         for(j = 0; j < status_size; j++) {
             cell_rule_all[i][j].input_status = cell->cell_rule->rule_group[i].input_status;
-            cell_rule_all[i][j].output_status = cell->cell_status->output_status_group[j].status;
+            cell_rule_all[i][j].output_status = cell->cell_status->status_group[j];
         }
     }
 
