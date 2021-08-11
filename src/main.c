@@ -30,7 +30,7 @@ void cell_init_test() {
     rule_group[0].input_status = malloc(sizeof(int) * input_size);
     rule_group[0].input_status[0] = 0;
     rule_group[0].input_status[1] = 0;
-    rule_group[0].output_status = 0;
+    rule_group[0].output_status = 1;
 
     cell = cell_init(status, status_size, status_group, rule_size, rule_group, input_size, input_group);
     input_group[0] = cell[0];
