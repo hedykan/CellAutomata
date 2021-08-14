@@ -67,3 +67,12 @@ void calc_cell_status_all(struct Cell *cell, int cell_size) {
         calc_cell_status(cell + i);
     }
 }
+
+// 获取输入组的输入状态总数
+int calc_cell_input_status_size(struct Cell *cell) {
+    int i, sum = 1;
+    for(i = 0; i < cell->cell_input->input_size; i++) {
+        sum = sum * cell->cell_input->input_group[i].cell_status->status_size;
+    }
+    return sum;
+}

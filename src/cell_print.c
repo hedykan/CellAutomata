@@ -50,11 +50,15 @@ void print_cell(struct Cell cell)
 
     printf("rule_group:{\n\trule_size: %d\n\trule_default_status: %d\n", cell.cell_rule->rule_size, cell.cell_rule->rule_default_status);
     for(i = 0; i < cell.cell_rule->rule_size; i++) {
-        printf("\trule_group_%d: ", i);
+        printf("\trule_group_%d: [", i);
         for(j = 0; j < cell.cell_input->input_size; j++) {
-            printf("%d ", cell.cell_rule->rule_group[i].input_status[j]);
+            if(j < (cell.cell_input->input_size - 1)) {
+                printf("%d, ", cell.cell_rule->rule_group[i].input_status[j]);
+            } else {
+                printf("%d", cell.cell_rule->rule_group[i].input_status[j]);
+            }
         }
-        printf("-> %d\n", cell.cell_rule->rule_group[i].output_status);
+        printf("] -> %d\n", cell.cell_rule->rule_group[i].output_status);
     }
     printf("}\n");
 

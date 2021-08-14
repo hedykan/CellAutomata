@@ -66,6 +66,10 @@ void cell_input_add(struct Cell *cell, struct Cell input_group_node);
 void cell_free(struct Cell *cell);
 void cell_free_all(struct Cell *cell, int cell_size);
 
+void cell_rule_fast_set(struct Cell *cell, int *output_status_group);
+void cell_rule_output_set(struct CellRuleNode *rule_group, int rule_size, struct Cell *input_group, int input_size, int *output_status_group, int floor, int *end);
+void cell_rule_input_set(struct CellRuleNode *rule_group, struct Cell *input_group, int sum, int status_size_sum, int floor);
+
 // cell_calc.c
 int calc_power(int base, int times);
 // int calc_cell_input_status(struct Cell *cell);
@@ -73,6 +77,7 @@ void calc_cell_status_get(struct Cell *cell);
 int calc_cell_status_match(struct Cell *cell);
 void calc_cell_status(struct Cell *cell);
 void calc_cell_status_all(struct Cell *cell, int cell_size);
+int calc_cell_input_status_size(struct Cell *cell);
 
 // cell_train.c
 void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rule_size);
