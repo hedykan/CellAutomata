@@ -42,19 +42,19 @@ void cell_init_test() {
 
     cell[0].cell_rule->rule_size = calc_cell_input_status_size(cell);
     cell[0].cell_rule->rule_group = malloc(sizeof(struct CellRuleNode) * cell[0].cell_rule->rule_size);
+    // create里分配rule_input_status
     int i;
     for(i = 0; i < cell[0].cell_rule->rule_size; i++) {
         cell[0].cell_rule->rule_group[i].input_status = malloc(sizeof(int) * input_size);
     }
 
-    int output_status_group[8] = {0, 0, 1, 1, 0, 0, 1, 1};
+    int output_status_group[8] = {1, 0, 1, 1, 0, 0, 1, 0};
     cell_rule_fast_set(cell, output_status_group);
 
-    // int i;
-    // for(i = 0; i < 10; i++) {
-    //     print_cell(cell[0]);
-    //     calc_cell_status_all(cell, 1);
-    // }
+    for(i = 0; i < 10; i++) {
+        print_cell(cell[0]);
+        calc_cell_status_all(cell, 1);
+    }
     print_cell(cell[0]);
     for(i = 0; i < cell[0].cell_rule->rule_size; i++) {
         free(cell[0].cell_rule->rule_group[i].input_status);
