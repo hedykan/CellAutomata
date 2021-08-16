@@ -69,7 +69,7 @@ void cell_free_all(struct Cell **cell_group, int cell_size);
 
 void cell_rule_fast_set(struct Cell *cell, int *output_status_group, int rule_default_status);
 void cell_rule_output_set(struct CellRuleNode *rule_group, int rule_size, struct Cell **input_group, int input_size, int *output_status_group, int floor, int *end);
-void cell_rule_input_set(struct CellRuleNode *rule_group, struct Cell **input_group, int sum, int status_size_sum, int floor);
+void cell_rule_input_set(struct CellRuleNode *rule_group, struct Cell **input_group, int sum, int status_mut, int floor);
 
 // cell_calc.c
 int calc_power(int base, int times);

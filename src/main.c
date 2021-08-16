@@ -14,16 +14,7 @@ int main()
 }
 
 void cell_init_test() {
-    struct Cell *cell;
-    cell = cell_test();
-    int i;
-    for(i = 0; i < 10; i++) {
-        print_cell(cell);
-        calc_cell_status_get(cell); // 要先获取所有状态
-        calc_cell_status(cell);
-    }
-    print_cell(cell);
-    cell_free(cell);
+    happy_cell_init();
 }
 
 int cell_scanf(struct Cell *cell_group)

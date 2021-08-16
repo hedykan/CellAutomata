@@ -89,6 +89,7 @@ void cell_input_add(struct Cell *cell, struct Cell *input_group_node) {
 
 void cell_free(struct Cell *cell) {
     int i;
+    free(cell->cell_status->status_group);
     free(cell->cell_status);
     for(i = 0; i < cell->cell_rule->rule_size; i++) {
         free(cell->cell_rule->rule_group[i].input_status);
@@ -120,7 +121,7 @@ void cell_rule_fast_set(struct Cell *cell, int *output_status_group, int rule_de
         cell->cell_rule->rule_group[i].input_status = malloc(sizeof(int) * cell->cell_input->input_size);
     }
     cell_rule_output_set(cell->cell_rule->rule_group, cell->cell_rule->rule_size, cell->cell_input->input_group, cell->cell_input->input_size, output_status_group, 0, &end);
-    cell_rule_input_set(cell->cell_rule->rule_group, cell->cell_input->input_group, sum, cell->cell_input->input_group[0]->cell_status->status_size, (cell->cell_input->input_size - 1));
+    cell_rule_input_set(cell->cell_rule->rule_group, cell->cell_input->input_group, sum, 1, (cell->cell_input->input_size - 1));
 }
 
 // 只设置output
@@ -140,15 +141,13 @@ void cell_rule_output_set(struct CellRuleNode *rule_group, int rule_size, struct
 }
 
 // 只设置input
-// 通过状态数组合status_size_sum算出状态组遍历次数all_mut，并通过状态数组合status_size_sum和状态数算出单个状态重复数status_mut
-// sum为规则数
+// status_mut = status_mut * status_size; 当前状态重复次数为上次重复次数乘以上次状态数
+// sum为规则总数
 // 递归执行
-void cell_rule_input_set(struct CellRuleNode *rule_group, struct Cell **input_group, int sum, int status_size_sum, int floor) {
+void cell_rule_input_set(struct CellRuleNode *rule_group, struct Cell **input_group, int sum, int status_mut, int floor) {
     int i, j, k, status_size = input_group[floor]->cell_status->status_size;
     // 计算每个状态重复次数
-    int all_mut = sum / status_size_sum;
-    // 计算状态遍历共需要几次
-    int status_mut = status_size_sum / status_size;
+    int all_mut = sum / (status_size * status_mut);
 
     // 遍历总重复次数
     for(i = 0; i < all_mut; i++) {
@@ -162,6 +161,6 @@ void cell_rule_input_set(struct CellRuleNode *rule_group, struct Cell **input_gr
         }
     }
     if(floor > 0) {
-        cell_rule_input_set(rule_group, input_group, sum, (status_size_sum * input_group[floor]->cell_status->status_size), (floor - 1));
+        cell_rule_input_set(rule_group, input_group, sum, (status_mut * status_size), (floor - 1));
     }
 }
