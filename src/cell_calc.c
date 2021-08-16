@@ -25,11 +25,10 @@ int calc_power(int base, int times) {
 
 // 获取输入状态
 void calc_cell_status_get(struct Cell *cell) {
-    // cell->cell_input->input_status_swap = calc_cell_input_status(cell);
     int i;
     for(i = 0; i < cell->cell_input->input_size; i++) {
         // 获取输入元胞状态
-        cell->cell_input->input_status_swap[i] = cell->cell_input->input_group[i].cell_status->status;
+        cell->cell_input->input_status_swap[i] = cell->cell_input->input_group[i]->cell_status->status;
     }
 }
 
@@ -37,9 +36,6 @@ void calc_cell_status_get(struct Cell *cell) {
 int calc_cell_status_match(struct Cell *cell) {
     int i, j;
     for(i = 0; i < cell->cell_rule->rule_size; i++) {
-        // if(cell->cell_rule->rule_group[i].input_status == cell->cell_input->input_status_swap) {
-        //     return cell->cell_rule->rule_group[i].output_status;
-        // }
         for(j = 0; j < cell->cell_input->input_size; j++) {
             if(cell->cell_input->input_status_swap[j] != cell->cell_rule->rule_group[i].input_status[j])
                 break;
@@ -56,15 +52,15 @@ void calc_cell_status(struct Cell *cell) {
 }
 
 // 计算所有输入
-void calc_cell_status_all(struct Cell *cell, int cell_size) {
+void calc_cell_status_all(struct Cell **cell_group, int cell_size) {
     int i;
     // 先获取
     for(i = 0; i < cell_size; i++) {
-        calc_cell_status_get(cell + i);
+        calc_cell_status_get(cell_group[i]);
     }
     // 再更新
     for(i = 0; i < cell_size; i++) {
-        calc_cell_status(cell + i);
+        calc_cell_status(cell_group[i]);
     }
 }
 
@@ -72,7 +68,7 @@ void calc_cell_status_all(struct Cell *cell, int cell_size) {
 int calc_cell_input_status_size(struct Cell *cell) {
     int i, sum = 1;
     for(i = 0; i < cell->cell_input->input_size; i++) {
-        sum = sum * cell->cell_input->input_group[i].cell_status->status_size;
+        sum = sum * cell->cell_input->input_group[i]->cell_status->status_size;
     }
     return sum;
 }

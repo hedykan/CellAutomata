@@ -1,5 +1,5 @@
 COMP = -std=c99
-OBJ_FILE = main.o cell_print.o cell_create.o cell_calc.o
+OBJ_FILE = main.o cell_print.o cell_create.o cell_calc.o cell_init.o
 ../cell.exe: $(OBJ_FILE)
 	gcc $(OBJ_FILE) $(COMP) -o ../cell.exe -g
 main.o: main.c
@@ -12,6 +12,8 @@ cell_print.o: cell_print.c
 	gcc cell_print.c $(COMP) -c -g
 cell_train.o: cell_train.c
 	gcc cell_train.c $(COMP) -c -g
+cell_init.o: cell_init.c
+	gcc cell_init.c $(COMP) -c -g
 gdb: ../cell.exe
 	gdb ../cell.exe
 clean:

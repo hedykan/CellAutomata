@@ -14,53 +14,16 @@ int main()
 }
 
 void cell_init_test() {
-    struct Cell *cell, *input_group;
-    int status, status_size, *status_group, rule_size, input_size;
-    struct CellRuleNode *rule_group;
-    status = 0;
-    status_size = 2;
-    status_group = malloc(sizeof(int) * status_size);
-    status_group[0] = 0;
-    status_group[1] = 1;
-    
-    input_size = 3;
-    input_group = malloc(sizeof(struct Cell) * input_size);
-
-    // rule_size = 0;
-    // rule_group = malloc(sizeof(struct CellRuleNode) * rule_size);
-    // rule_group[0].input_status = malloc(sizeof(int) * input_size);
-    // rule_group[0].input_status[0] = 0;
-    // rule_group[0].input_status[1] = 0;
-    // rule_group[0].output_status = 1;
-
-    cell = cell_init(status, status_size, status_group, rule_size, rule_group, input_size, input_group);
-    input_group[0] = cell[0];
-    input_group[1] = cell[0];
-    input_group[2] = cell[0];
-    cell->cell_input->input_group = input_group;
-    cell->cell_rule->rule_default_status = 4;
-
-    cell[0].cell_rule->rule_size = calc_cell_input_status_size(cell);
-    cell[0].cell_rule->rule_group = malloc(sizeof(struct CellRuleNode) * cell[0].cell_rule->rule_size);
-    // create里分配rule_input_status
+    struct Cell *cell;
+    cell = cell_test();
     int i;
-    for(i = 0; i < cell[0].cell_rule->rule_size; i++) {
-        cell[0].cell_rule->rule_group[i].input_status = malloc(sizeof(int) * input_size);
-    }
-
-    int output_status_group[8] = {1, 0, 1, 1, 0, 0, 1, 0};
-    cell_rule_fast_set(cell, output_status_group);
-
     for(i = 0; i < 10; i++) {
-        print_cell(cell[0]);
-        calc_cell_status_all(cell, 1);
+        print_cell(cell);
+        calc_cell_status_get(cell); // 要先获取所有状态
+        calc_cell_status(cell);
     }
-    print_cell(cell[0]);
-    for(i = 0; i < cell[0].cell_rule->rule_size; i++) {
-        free(cell[0].cell_rule->rule_group[i].input_status);
-    }
-    // free(rule_group);
-    cell_free_all(cell, 1);
+    print_cell(cell);
+    cell_free(cell);
 }
 
 int cell_scanf(struct Cell *cell_group)
@@ -75,7 +38,7 @@ int cell_scanf(struct Cell *cell_group)
         /* cell_status_set(cell_group + local, status, cell_group[local].cell_status->status_size, cell_group[local].cell_status->status_group); */
         /* cell_rule_change(cell_group + local, rule); */
         /* print_cell(cell_group[local]); */
-        print_cell(cell_group[local]);
+        // print_cell(cell_group[local]);
         return local;
     }
     return 0;
