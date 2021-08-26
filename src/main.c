@@ -6,8 +6,7 @@ void print_group(struct CellRuleNode *rule_group, int rule_size);
 
 // TODO 状态组的扩展
 // TODO 输入输出类型转换
-int main()
-{
+int main() {
     cell_init_test();
 
     return 0;
@@ -17,8 +16,7 @@ void cell_init_test() {
     happy_cell_init();
 }
 
-int cell_scanf(struct Cell *cell_group)
-{
+int cell_scanf(struct Cell *cell_group) {
     int local, status, rule;
     char c;
     printf("user> ");
