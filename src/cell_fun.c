@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "cell.h"
-
+// #include "cell.h"
+// 已废弃
 void cell_init(struct Cell *cell, int cell_id, int status, int status_size, int *status_group, int rule_size, int rule, int input_size, int *input_group, int transfer_status)
 {
     cell->id = cell_id;

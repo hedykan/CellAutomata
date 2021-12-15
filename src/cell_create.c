@@ -87,16 +87,33 @@ void cell_input_add(struct Cell *cell, struct Cell *input_group_node) {
     cell->cell_input->input_size = size + 1;
 }
 
-void cell_free(struct Cell *cell) {
-    int i;
+void cell_status_free(struct Cell *cell) {
     free(cell->cell_status->status_group);
     free(cell->cell_status);
+}
+
+void cell_rule_free(struct Cell *cell) {
+    int i;
     for(i = 0; i < cell->cell_rule->rule_size; i++) {
         free(cell->cell_rule->rule_group[i].input_status);
     }
     free(cell->cell_rule);
+}
+
+void cell_input_free(struct Cell *cell) {
     free(cell->cell_input->input_status_swap);
     free(cell->cell_input);
+}
+
+void cell_free(struct Cell *cell) {
+    int i;
+    // 释放状态组
+    cell_status_free(cell);
+    // 释放规则组
+    cell_rule_free(cell);
+    // 释放输入组
+    cell_input_free(cell);
+    // 释放元胞
     free(cell);
 }
 

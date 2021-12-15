@@ -64,6 +64,9 @@ void cell_input_init(struct Cell *cell, int input_size, struct Cell **input_grou
 void cell_input_set(struct Cell *cell, int input_size, struct Cell **input_group);
 void cell_input_add(struct Cell *cell, struct Cell *input_group_node);
 
+void cell_status_free(struct Cell *cell);
+void cell_rule_free(struct Cell *cell);
+void cell_input_free(struct Cell *cell);
 void cell_free(struct Cell *cell);
 void cell_free_all(struct Cell **cell_group, int cell_size);
 
@@ -83,8 +86,10 @@ int calc_cell_input_status_size(struct Cell *cell);
 // cell_train.c
 void cell_rule_train(struct Cell *cell, struct CellRuleNode *rule_group, int rule_size);
 
+// cell_operate.c
+void cell_operate(struct Cell **cell_group, int cell_size, int change_index, int show_index);
+void cell_status_change(struct Cell *cell, int status);
+
 // cell_init.c
 struct Cell *cell_test();
-struct Cell *cell_well();
-struct Cell *cell_happy_angry();
-void happy_cell_init();
+void cell_emotion_init();

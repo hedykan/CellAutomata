@@ -4,8 +4,8 @@ void cell_init_test();
 int cell_scanf(struct Cell *cell_group);
 void print_group(struct CellRuleNode *rule_group, int rule_size);
 
-// TODO 状态组的扩展
-// TODO 输入输出类型转换
+// TODO 创建传感器
+// 传感器是一个元胞，但是他的状态可以随意修改
 int main() {
     cell_init_test();
 
@@ -13,7 +13,8 @@ int main() {
 }
 
 void cell_init_test() {
-    happy_cell_init();
+    // happy_cell_init();
+    cell_emotion_init();
 }
 
 int cell_scanf(struct Cell *cell_group) {
@@ -32,71 +33,6 @@ int cell_scanf(struct Cell *cell_group) {
     }
     return 0;
 }
-
-// void cell_init_test() {
-//     struct Cell *cell, *cell_group;
-//     struct CellStatusNode *input_status_group, *output_status_group;
-//     struct CellRuleNode *rule_group;
-//     int input_size, output_size, rule_size, i;
-//     cell_group = malloc(sizeof(struct Cell));
-//     input_status_group = malloc(sizeof(struct CellStatusNode) * 2);
-//     output_status_group = malloc(sizeof(struct CellStatusNode) * 2);
-//     rule_group = malloc(sizeof(struct CellRuleNode) * 2);
-
-//     input_size = 2;
-//     for(i = 0; i < input_size; i++) {
-//         input_status_group[i].status = i;
-//     }
-
-//     output_size = 2;
-//     for(i = 0; i < output_size; i++) {
-//         output_status_group[i].status = i;
-//     }
-
-//     rule_size = input_size;
-//     for(i = 0; i < rule_size; i++) {
-//         rule_group[i].input_status = i;
-//         rule_group[i].output_status = i;
-//     }
-
-//     cell = cell_init(0, output_size, output_status_group, rule_size, rule_group, 1, input_size, input_status_group, cell_group);
-//     cell->id = 0;
-//     cell->cell_input->cell_group = cell;
-//     cell[0].cell_rule->rule_default_status = 0;
-
-//     // 训练
-//     struct CellRuleNode *rule_group1;
-//     rule_group1 = malloc(sizeof(struct CellRuleNode) * 2);
-//     rule_group1[0].input_status = 0;
-//     rule_group1[0].output_status = 1;
-//     rule_group1[1].input_status = 1;
-//     rule_group1[1].output_status = 0;
-
-//     cell_rule_train(cell, rule_group1, 2);
-//     free(rule_group1);
-
-
-//     for(i = 0; i < 10; i++) {
-//         calc_cell_status_all(cell, 1);
-//         print_cell_total(cell, 1, "not");
-//     }
-
-//     // 新增测试
-//     struct CellStatusNode status_node;
-//     struct CellRuleNode rule_node;
-//     cell_status_add(cell, status_node);
-//     cell_rule_add(cell, rule_node);
-//     cell_input_add(cell, status_node);
-//     print_cell_all(cell, 1);
-
-//     cell_free(cell);
-//     free(cell_group);
-//     free(rule_group);
-//     free(input_status_group);
-//     free(output_status_group);
-
-//     return;
-// }
 
 void print_group(struct CellRuleNode *rule_group, int rule_size) {
     int i;
