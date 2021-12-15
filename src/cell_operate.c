@@ -3,17 +3,19 @@
 // TODO 把他改的普适起来
 void cell_operate(struct Cell **cell_group, int cell_size, int change_index, int show_index)
 {
-    int status[5] = {1, 3, 2, 1, 2}, i;
-    for (i = 0; i < 5; i++)
+    int status;
+    while(1)
     {
         // 在这一时刻瞬间改变传感器的输入值
-        cell_status_change(cell_group[change_index], status[i]);
+        printf("please type an input:");
+        scanf("%d", &status);
+        cell_status_change(cell_group[change_index], status);
         // 先获取状态
         calc_cell_status_get(cell_group[0]);
         calc_cell_status_get(cell_group[1]);
         // 进行运算
         calc_cell_status(cell_group[show_index]);
-        printf("emotion_cell's input: %d, emotion_cell's status: ", status[i]);
+        printf("emotion_cell's input: %d, emotion_cell's status: ", status);
         print_cell_status(cell_group[show_index]);
         printf("\n");
     }
